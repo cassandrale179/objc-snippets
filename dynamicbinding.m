@@ -70,3 +70,9 @@ int main() {
    
    return 0;
 }
+
+
+/* 
+printArea method is dynamically selected in runtime. It is an example for dynamic binding and is quite useful in many situations when 
+dealing with similar kind of objects.
+*/ 
