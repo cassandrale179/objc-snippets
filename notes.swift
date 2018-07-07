@@ -1,6 +1,9 @@
+// Resources: 
+// https://www.bobthedeveloper.io/blog/introduction-to-protocol-oriented-programming-in-swift  
+// https://blog.bobthedeveloper.io/the-complete-understanding-of-swift-delegate-and-data-source-9c91ecd7f1 
+
 
 // 1. Differences betwen Class and Struct 
-
 // 1A. Class Object 
 class HumanClass {
  var name: String
@@ -24,7 +27,6 @@ newHumanStruct.name = "Bobby"
 humanStruct.name // "Bob" 
 
 
-
 // 2. Protocols 
 protocol Human {
  var name: String { get set }
@@ -32,15 +34,12 @@ protocol Human {
  func sayHi() } 
  
  
- // 2A. Create a Korean struct that adopt the protocol 
+ // 2A. Create a Korean struct that adopt the protocol. A struct that adopt a protocol must implement all of the properties and methods belong to it 
  struct Korean: Human {
  var name: String = "Bob Lee"
  var race: String = "Asian"
  func sayHi() { print("Hi, I'm \(name)") }
 }
-
-// 2B. A struct that adopt a protocol must implement all of the properties and methods belong to it
-
 
 // 2C. Create a protocol that inherits from another protocol 
 protocol SuperHuman: Human {
@@ -58,5 +57,33 @@ struct SuperSaiyan: SuperHuman {
  func punch() { print("Puuooookkk") }
 }
 
+// 3. Delegates and Data Source
 
-// Resources: https://www.bobthedeveloper.io/blog/introduction-to-protocol-oriented-programming-in-swift 
+// 3A. Create a delegate that has a method with a string as a parameter 
+protocol FirstVCDelegate {
+ func passData(data: String)
+}
+
+
+// 3B. Create a FirstVC class with an optional property delegate whose type is FirstVCDelegate 
+class FirstVC {
+ var delegate: FirstVCDelegate?
+}
+
+
+// 3C. Create a class SecondVC that conforms to FirstVCDelegate 
+class SecondVC: FirstVCDelegate {
+ func passData(data: String) {
+  print("Something happened")
+ }
+} 
+
+let firstVC = FirstVC() 
+let secondVC = SecondVC()  
+firstVC.delegate = secondVC  // secondVC = delegate  
+firstVC.delegate?.passData(data: "a bunch of contracts”)
+// "Something happened"  
+// Conclusion: You are able to execute the passData method from FirstVC even though the passData method resides in SecondVC.
+                           
+                        
+ 
